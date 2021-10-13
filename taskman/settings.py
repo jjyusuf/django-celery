@@ -101,14 +101,22 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
+#CELERY_BROKER_URL = 'redis://localhost:6379/0'
+
+# use the redis url if using redis
 #CELERY_BROKER_URL = 'filesystem://'
+
+#celery also supports file based broker if you dont have redis installed
 #broker_dir = os.path.join(BASE_DIR, '.broker')
 #CELERY_BROKER_TRANSPORT_OPTIONS = {
 #     "data_folder_in": os.path.join(broker_dir, "out"),
 #     "data_folder_out": os.path.join(broker_dir, "out"),
 #     "data_folder_processed": os.path.join(broker_dir, "processed"),
 # }
+
+# Using environment where available
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://localhost:6379/0")
+CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER", "redis://localhost:6379/0")
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
